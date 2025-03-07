@@ -8,15 +8,6 @@ RUN apt-get update && \
 RUN chmod +x ./install-parquet-extension-deps.sh
 RUN ./install-parquet-extension-deps.sh
 
-# Get Rust
-RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
-
-# Add .cargo/bin to PATH
-ENV PATH="/root/.cargo/bin:${PATH}"
-
-# Build parquet_fdw Postgres extension
-RUN git clone https://github.com/adjust/parquet_fdw && cd /parquet_fdw && make install
-
 ARG BLOCKSCOUT_USER=blockscout
 ARG BLOCKSCOUT_GROUP=blockscout
 ARG BLOCKSCOUT_UID=10001
@@ -47,3 +38,7 @@ RUN git clone https://github.com/CrunchyData/pg_parquet && \
     cargo pgrx init --pg15 $(which pg_config) && \
     echo "shared_preload_libraries = 'pg_parquet'" >> ~/.pgrx/data-15/postgresql.conf && \
     cargo pgrx run pg15
+
+# Build parquet_fdw Postgres extension
+RUN git clone https://github.com/adjust/parquet_fdw && \
+    cd /home/blockscout/parquet_fdw && make install
