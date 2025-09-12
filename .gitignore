@@ -1,0 +1,4 @@
+# Ignore Docker named volume mount for PostgreSQL data
+pgdata/
+parquet_files/
+.DS_Store

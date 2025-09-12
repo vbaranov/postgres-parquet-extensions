@@ -32,12 +32,12 @@ WORKDIR /home/blockscout
 RUN cd /home/blockscout
 
 # Build pg_parquet Postgres extension
-RUN git clone --branch aykut/bump-deps https://github.com/CrunchyData/pg_parquet && \
+RUN git clone https://github.com/vbaranov/pg_parquet && \
     cd /home/blockscout/pg_parquet && \
-    cargo install cargo-pgrx@0.14.1 && \
+    cargo install --force --locked cargo-pgrx@0.16.0 && \
     cargo pgrx init --pg15 $(which pg_config) && \
     echo "shared_preload_libraries = 'pg_parquet'" >> ~/.pgrx/data-15/postgresql.conf && \
-    cargo pgrx run pg15
+    cargo pgrx install --release --features pg15
 
 # Build parquet_fdw Postgres extension
 RUN git clone https://github.com/adjust/parquet_fdw && \

@@ -2,7 +2,7 @@ services:
   postgres-parquet-extensions:
     image: postgres-parquet-extensions
     shm_size: 256m
-    restart: always
+    restart: unless-stopped
     container_name: 'postgres-parquet-extensions'
     build:
       context: .
@@ -15,3 +15,8 @@ services:
     ports:
       - target: 5432
         published: 7432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./parquet_files:/parquet_files
+volumes:
+  pgdata:
