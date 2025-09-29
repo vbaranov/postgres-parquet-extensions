@@ -31,6 +31,8 @@ ENV PATH="/home/blockscout/.cargo/bin:${PATH}"
 WORKDIR /home/blockscout
 RUN cd /home/blockscout
 
+RUN mkdir /home/blockscout/parquet_files && chown blockscout:blockscout /home/blockscout/parquet_files
+
 # Build pg_parquet Postgres extension
 RUN git clone https://github.com/vbaranov/pg_parquet && \
     cd /home/blockscout/pg_parquet && \

@@ -17,6 +17,6 @@ services:
         published: 7432
     volumes:
       - pgdata:/var/lib/postgresql/data
-      - ./parquet_files:/parquet_files
+      - ./parquet_files:/home/blockscout/parquet_files
 volumes:
   pgdata:
